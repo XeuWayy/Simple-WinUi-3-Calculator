@@ -1,0 +1,172 @@
+﻿<Window
+    x:Class="Calculator_WinUi3.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calculator_WinUi3"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" KeyDown="Button_KeyDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Create Style for the TitleBar -->
+        <StackPanel x:Name="AppTitleBar" Grid.Row="0" Background="{ThemeResource AppBarBackgroundThemeBrush}" Orientation="Horizontal">
+            <Image Margin="7,0,0,0" Width="16" Height="16" Source="Assets/CalculatorApp.png" />
+            <TextBlock Margin="8,-1,0,0" VerticalAlignment="Center" FontWeight="SemiBold" Text="Calculator WinUI3" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+
+            <!--Setup TextBlock & TextBox for Calc & Result-->
+            <TextBlock Name="Default" Text="Standard" Margin="12,8,0,-5" FontSize="20" FontWeight="SemiBold"/>
+            <TextBlock Name="TextblockCalc" Text="" Foreground="#9c9c9c" TextAlignment="Right" Margin="0,0,30,0"/>
+            <TextBox Name="TextblockResult" Text="0" FontWeight="SemiBold" FontSize="45" Margin="0,5,0,0" MaxWidth="300" MinHeight="75" MaxHeight="100" TextAlignment="Right" TextWrapping="NoWrap" Background="{ThemeResource BackButtonBackgroundThemeBrush}" BorderThickness="0" IsReadOnly="True">
+                <TextBox.Resources>
+                    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{ThemeResource BackButtonBackgroundThemeBrush}" />
+                    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{ThemeResource BackButtonBackgroundThemeBrush}"/>
+                    <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{ThemeResource BackButtonBackgroundThemeBrush}"/>
+                </TextBox.Resources>
+            </TextBox>
+
+            <!--Setup the first two row with custom Background, PointerOver, Pressed ressources-->
+            <Grid Height="107" Margin="8,8,8,-1">
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="53"/>
+                    <RowDefinition MaxHeight="53"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackground" Color="#f9f9f9"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#f6f6f6" Opacity="1"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#f4f4f4" Opacity="1"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonBackground" Color="#323232"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#3b3b3b" Opacity="1"/>
+                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#323232" Opacity="1"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Grid.Resources>
+
+                <Button Name="Percent_btn" Content="%" Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Percent_Click"/>
+                <Button Name="CE_btn" Content="CE" Grid.Row="0" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="CE_Click"/>
+                <Button Name="C_btn" Content="C" Grid.Row="0" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="C_Click"/>
+                <Button Name="Back_btn" Grid.Row="0" Grid.Column="3" Style="{StaticResource DefaultColorButton}" Click="Back_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE106;" Margin="0,-1,2,0"/>
+                </Button>
+
+                <Button Name="OneByX_btn" Content="1/x" Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="OneByX_Click"/>
+                <Button Name="Sqr_btn" Content="x²" Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="sqr_Click"/>
+                <Button Name="Sqrt_btn" Content="√x" Grid.Row="1" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="Sqrt_Click"/>
+                <Button Name="Divide_btn" Content="÷" Grid.Row="1" Grid.Column="3" Style="{StaticResource DefaultColorButton}" Click="Operator_Click"/>
+            </Grid>
+
+            <!--Setup Grid for Number & Operator Button-->
+            <Grid Margin="8,0,8,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Setup Number Button with custom Background, PointerOver, Pressed ressources-->
+                <Grid Height="210" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition MaxHeight="53"/>
+                        <RowDefinition MaxHeight="53"/>
+                        <RowDefinition MaxHeight="53"/>
+                        <RowDefinition MaxHeight="53"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Light">
+                                    <SolidColorBrush x:Key="ButtonBackground" Color="#ffffff"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#fcfcfc" Opacity="1"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#f9f9f9" Opacity="1"/>
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonBackground" Color="#3b3b3b"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#323232" Opacity="1"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#272727" Opacity="1"/>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+
+                    <Button Name="Seven_btn" Content="7" Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Four_btn" Content="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="One_btn" Content="1" Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="posneg_btn" Content="⁺∕₋" Grid.Row="3" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="posneg_Click"/>
+
+                    <Button Name="Eight_btn" Content="8" Grid.Row="0" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Five_btn" Content="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Two_btn" Content="2" Grid.Row="2" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Zero_btn" Content="0" Grid.Row="3" Grid.Column="1" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+
+                    <Button Name="Nine_btn" Content="9" Grid.Row="0" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Six_btn" Content="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Three_btn" Content="3" Grid.Row="2" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                    <Button Name="Comma_btn" Content="," Grid.Row="3" Grid.Column="2" Style="{StaticResource DefaultColorButton}" Click="Button_Click"/>
+                </Grid>
+
+                <!--Setup Operator Button with custom Background, PointerOver, Pressed ressources-->
+                <Grid Height="210" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" MaxHeight="53"/>
+                        <RowDefinition Height="*" MaxHeight="53"/>
+                        <RowDefinition Height="*" MaxHeight="53"/>
+                        <RowDefinition Height="*" MaxHeight="53"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Light">
+                                    <SolidColorBrush x:Key="ButtonBackground" Color="#f9f9f9"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#f6f6f6" Opacity="1"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#f4f4f4" Opacity="1"/>
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Dark">
+                                    <SolidColorBrush x:Key="ButtonBackground" Color="#323232"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#3b3b3b" Opacity="1"/>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#323232" Opacity="1"/>
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+
+                    <Button Name="Multiply_btn" Content="x" Grid.Row="0" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Operator_Click"/>
+                    <Button Name="Minus_btn" Content="-" Grid.Row="1" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Operator_Click"/>
+                    <Button Name="Plus_btn" Content="+" Grid.Row="2" Grid.Column="0" Style="{StaticResource DefaultColorButton}" Click="Operator_Click"/>
+                    <Button Name="Equal_btn" Content="=" Grid.Row="3" Grid.Column="0" Style="{StaticResource AccentColorButton}" Click="Equal_Click"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
